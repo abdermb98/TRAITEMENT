@@ -172,7 +172,7 @@ input[type="search"] {
 
     <div id="form-container">
         <form id="data-entry-form">
-            <label for="date">Date:</label>
+            <label for="date">DATE:</label>
             <input type="date" id="date" name="date" required>
 
             <label for="stock-initial">PARCELLES</label>
@@ -203,16 +203,16 @@ input[type="search"] {
                 <option style="font-weight: bold;" value="P62 CEBOLLINO">P62 CEBOLLINO</option>
                 <option style="font-weight: bold;" value="P63 CEBOLLINO">P63 CEBOLLINO</option>
             </select>
-            <label for="entree">Produit</label>
+            <label for="entree">PRODUIT</label>
             <input type="text" id="entree" name="entree" >
         
-            <label for="sortie">superficie</label>
+            <label for="sortie">SUPERFICIE</label>
             <input type="text" id="sortie" name="sortie" >
 
             <label for="stock-final">TIME</label>
             <input type="time" id="stock-final" name="stockFinal" >
 
-            <label for="observation">Observation:</label>
+            <label for="observation">DOSE:</label>
             <input type="text" id="observation" name="observation">
 
             <button type="submit">Submit</button>
@@ -235,6 +235,18 @@ input[type="search"] {
 </div>
 
 <script>
+    let currentSheetUrl = '';
+    let currentSheetName = '';
+
+    document.getElementById('sheet-select').addEventListener('change', function() {
+        currentSheetUrl = this.value;
+        currentSheetName = this.options[this.selectedIndex].text;
+        
+        
+        loadTableData();
+    });
+
+    
     document.getElementById('stock-initial').addEventListener('change', function() {
     // الحصول على القيمة المحددة من القائمة المنسدلة
     const selectedValue = this.value; 
@@ -352,16 +364,7 @@ setCurrentTimeInInput();
     document.getElementById('youtubeButton').onclick = function() {
     window.location.href = 'https://abdermb98.github.io/home/';
 };
-    let currentSheetUrl = '';
-    let currentSheetName = '';
-
-    document.getElementById('sheet-select').addEventListener('change', function() {
-        currentSheetUrl = this.value;
-        currentSheetName = this.options[this.selectedIndex].text;
-        
-        
-        loadTableData();
-    });
+    
 
     
 
@@ -416,7 +419,7 @@ setCurrentTimeInInput();
                 th.textContent = cell;
                 const searchInput = document.createElement('input');
                 searchInput.type = 'search';
-                searchInput.placeholder = 'Search...';
+                searchInput.placeholder = '...';
                 searchInput.addEventListener('input', () => {
                     filterTable(index, searchInput.value);
                 });
@@ -506,8 +509,12 @@ function resetAndFilter(columnIndex, searchTerm) {
         // تعيين ورقة العمل الافتراضية عند تحميل الصفحة
         document.getElementById('sheet-select').dispatchEvent(new Event('change'));
     });
+    document.addEventListener('DOMContentLoaded', function() {
+        // تعيين ورقة العمل الافتراضية عند تحميل الصفحة
+        document.getElementById('sheet-select').dispatchEvent(new Event('change1'));
+    });
 
-    
+    loadTableData();
 </script>
 </body>
 </html>
