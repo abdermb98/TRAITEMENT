@@ -454,10 +454,20 @@ setCurrentTimeInInput();
     }
 
     function formatDate(value) {
-        const date = new Date(value);
-        
-        return isNaN(date.getTime()) ? value : `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    const date = new Date(value);
+
+    // تحقق من صلاحية التاريخ
+    if (isNaN(date.getTime())) {
+        return value;
     }
+
+    // تعديل التاريخ بناءً على توقيت المنطقة الزمنية
+    const offset = date.getTimezoneOffset() * 60000; // تحويل إلى ميلي ثانية
+    const localDate = new Date(date.getTime() - offset);
+
+    // تنسيق التاريخ بصيغة dd/mm/yyyy
+    return `${localDate.getDate().toString().padStart(2, '0')}/${(localDate.getMonth() + 1).toString().padStart(2, '0')}/${localDate.getFullYear()}`;
+}
 
     function formatTime(value) {
     const date = new Date(value);
